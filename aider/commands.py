@@ -407,13 +407,15 @@ class Commands:
         for file in other_files:
             self.io.tool_output(f"  {file}")
 
+    from aider.knowledgebase import extract_urls_from_sitemap
+
     def cmd_research(self, args):
         "Perform research on a given Sitemap URL"
         url = args.strip()
-        # Perform the desired operation with the URL
-        # For example, fetch the content of the URL and print it
-        # This is just a placeholder, replace it with the actual operation
-        self.io.tool_output(f"Researching Sitemap URL: {url}")
+        # Pass the URL to the extract_urls_from_sitemap function
+        urls = extract_urls_from_sitemap(url)
+        # Print the extracted URLs
+        self.io.tool_output(f"Extracted URLs from Sitemap: {urls}")
 
     def cmd_help(self, args):
         "Show help about all commands"
