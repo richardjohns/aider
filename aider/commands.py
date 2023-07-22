@@ -420,6 +420,19 @@ class Commands:
         )
         self.io.tool_output(f"KnowledgeBase built from Sitemap: {url}")
 
+    def cmd_ask(self, args):
+        "Ask a question and get an answer from the KnowledgeBase"
+        url = "your_sitemap_url"  # replace with your sitemap url
+        pattern = "your_pattern"  # replace with your pattern
+        kb = KnowledgeBase(
+            sitemap_url=url,
+            pattern=pattern,
+            chunk_size=8000,
+            chunk_overlap=3000,
+        )
+        answer = kb.ask(args)
+        self.io.tool_output(answer)
+
     def cmd_help(self, args):
         "Show help about all commands"
         commands = sorted(self.get_commands())
