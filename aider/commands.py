@@ -407,15 +407,18 @@ class Commands:
         for file in other_files:
             self.io.tool_output(f"  {file}")
 
-    from aider.knowledgebase import extract_urls_from_sitemap
+    from aider.knowledgebase import KnowledgeBase
 
     def cmd_research(self, args):
         "Perform research on a given Sitemap URL"
         url = args.strip()
-        # Pass the URL to the extract_urls_from_sitemap function
-        urls = extract_urls_from_sitemap(url)
-        # Print the extracted URLs
-        self.io.tool_output(f"Extracted URLs from Sitemap: {urls}")
+        # Initiate building the KnowledgeBase
+        kb = KnowledgeBase(
+            sitemap_url=url,
+            chunk_size=8000,
+            chunk_overlap=3000,
+        )
+        self.io.tool_output(f"KnowledgeBase built from Sitemap: {url}")
 
     def cmd_help(self, args):
         "Show help about all commands"
