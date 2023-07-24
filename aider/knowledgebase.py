@@ -13,7 +13,7 @@ import requests
 import xml.etree.ElementTree as ET
 from loguru import logger
 
-load_dotenv(dotenv_path="./.env")
+load_dotenv(dotenv_path="../.env")
 
 # Print the absolute path of the script file
 print(f"Script file: {os.path.abspath(__file__)}")
