@@ -395,7 +395,15 @@ class Commands:
             return
         question = args.strip()
         answer = self.knowledge_base.ask(question)
-        self.io.tool_output(f"Answer: {answer}")
+        
+        # Extract the answer text and sources from the answer dictionary
+        answer_text = answer['answer']
+        sources = answer['sources']
+        
+        # Format the output
+        output = f"Answer: {answer_text}\n\nSources:\n{sources}"
+        
+        self.io.tool_output(output)
 
     def cmd_exit(self, args):
         "Exit the application"
