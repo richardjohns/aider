@@ -91,7 +91,7 @@ if __name__ == "__main__":
     # Build the knowledge base
     kb = KnowledgeBase(
         sitemap_url="https://nextjs.org/sitemap.xml",
-        pattern="docs/api-refe",
+        pattern="docs/",
         chunk_size=8000,
         chunk_overlap=3000,
     )
