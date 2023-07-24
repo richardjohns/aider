@@ -76,14 +76,17 @@ class KnowledgeBase:
         logger.info("{n} chunks created", n=len(docs))
 
         logger.info("Building the vector database ...")
+        persist_directory = '../db'
         embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
-        docsearch = Chroma.from_documents(docs, embeddings)
+        vectordb = Chroma.from_documents(docs, embeddings, persist_directory)
+        # for non-persistent local development instead use
+        # vectordb = Chroma.from_documents(docs, embeddings)
 
         logger.info("Building the retrieval chain ...")
         self.chain = RetrievalQAWithSourcesChain.from_chain_type(
             ChatOpenAI(openai_api_key=OPENAI_API_KEY),
             chain_type="map_reduce",
-            retriever=docsearch.as_retriever(),
+            retriever=vectordb.as_retriever(),
         )
 
         logger.info("Knowledge base created!")
