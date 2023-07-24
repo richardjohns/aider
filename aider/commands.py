@@ -382,7 +382,7 @@ class Commands:
         sitemap_url = args.strip()
         self.knowledge_base = KnowledgeBase(
             sitemap_url=sitemap_url,
-            pattern="docs/api-refe",
+            pattern="docs/",
             chunk_size=8000,
             chunk_overlap=3000,
         )
