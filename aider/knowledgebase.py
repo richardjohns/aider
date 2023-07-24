@@ -7,12 +7,15 @@ from langchain.document_loaders import UnstructuredURLLoader
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQAWithSourcesChain
 
+import os
 import requests
 import xml.etree.ElementTree as ET
 from dotenv import load_dotenv
 from loguru import logger
 
 load_dotenv()
+
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 
 def extract_urls_from_sitemap(sitemap):
@@ -91,7 +94,7 @@ if __name__ == "__main__":
     # Build the knowledge base
     kb = KnowledgeBase(
         sitemap_url="https://nextjs.org/sitemap.xml",
-        pattern="docs/",
+        pattern="docs/getting-started/",
         chunk_size=8000,
         chunk_overlap=3000,
     )
