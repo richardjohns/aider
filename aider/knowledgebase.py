@@ -14,11 +14,9 @@ import xml.etree.ElementTree as ET
 from dotenv import load_dotenv
 from loguru import logger
 
-load_dotenv()
-
-config = dotenv_values("../.env")
-print(config)  # Debugging line
-openai_api_key = config["OPENAI_API_KEY"]
+load_dotenv("../.env")
+openai_api_key = os.getenv("OPENAI_API_KEY")
+print(openai_api_key)  # To check if the value is correctly loaded
 
 
 def extract_urls_from_sitemap(sitemap):
