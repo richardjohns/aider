@@ -7,6 +7,7 @@ from langchain.document_loaders import UnstructuredURLLoader
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQAWithSourcesChain
 
+from dotenv import load_dotenv, dotenv_values
 import os
 import requests
 import xml.etree.ElementTree as ET
@@ -15,7 +16,8 @@ from loguru import logger
 
 load_dotenv()
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
+config = dotenv_values("../.env")
+openai_api_key = config["OPENAI_API_KEY"]
 
 
 def extract_urls_from_sitemap(sitemap):
