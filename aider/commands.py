@@ -395,7 +395,7 @@ class Commands:
     def cmd_ask(self, args):
         "Ask a question to the knowledge base"
         if self.knowledge_base is None:
-            self.io.tool_error("No knowledge base available. Use /request to create one.")
+            self.io.tool_error("No knowledge base available. Use /research to create one.")
             return
         question = args.strip()
         answer = self.knowledge_base.ask(question)
@@ -449,8 +449,6 @@ class Commands:
             cmd_method = getattr(self, cmd_method_name, None)
             if cmd_method:
                 description = cmd_method.__doc__
-                if cmd == '/research':
-                    description += " Example: /research https://nextjs.org/sitemap.xml f=docs/getting-started"
                 self.io.tool_output(f"{cmd} {description}")
             else:
                 self.io.tool_output(f"{cmd} No description available.")
