@@ -13,16 +13,11 @@ import xml.etree.ElementTree as ET
 from dotenv import load_dotenv
 from loguru import logger
 
-#load_dotenv("../.env")
-#openai_api_key = os.getenv("OPENAI_API_KEY")
-#print(openai_api_key)  # To check if the value is correctly loaded
-
 # Define your OpenAI API key here
 OPENAI_API_KEY = "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"
 
-# Pass the OPENAI_API_KEY value to the OpenAIEmbeddings() function
-embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
-openai_api_key = OPENAI_API_KEY
+# Pass the OPENAI_API_KEY value to the OpenAIEmbeddings() function using the correct parameter name `openai_api_key`
+embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 
 
 def extract_urls_from_sitemap(sitemap):
@@ -81,7 +76,7 @@ class KnowledgeBase:
         logger.info("{n} chunks created", n=len(docs))
 
         logger.info("Building the vector database ...")
-        embeddings = OpenAIEmbeddings(api_key=openai_api_key)
+        embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
         docsearch = Chroma.from_documents(docs, embeddings)
 
         logger.info("Building the retrieval chain ...")
@@ -105,4 +100,3 @@ if __name__ == "__main__":
         chunk_size=8000,
         chunk_overlap=3000,
     )
-
