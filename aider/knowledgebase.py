@@ -17,6 +17,7 @@ from loguru import logger
 load_dotenv()
 
 config = dotenv_values("../.env")
+print(config)  # Debugging line
 openai_api_key = config["OPENAI_API_KEY"]
 
 
