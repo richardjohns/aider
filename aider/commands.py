@@ -379,14 +379,18 @@ class Commands:
     def cmd_research(self, args):
         "Research a sitemap URL and create a local Chroma vector database"
         from aider.knowledgebase import KnowledgeBase
-        sitemap_url = args.strip()
+        args = args.split(' ')
+        sitemap_url = args[0].strip()
+        pattern = "docs/getting-started/"
+        if len(args) > 1 and args[1].startswith('f='):
+            pattern = args[1][2:]
         self.knowledge_base = KnowledgeBase(
             sitemap_url=sitemap_url,
-            pattern="docs/getting-started/",
+            pattern=pattern,
             chunk_size=8000,
             chunk_overlap=3000,
         )
-        self.io.tool_output(f"Knowledge base created from {sitemap_url}")
+        self.io.tool_output(f"Knowledge base created from {sitemap_url} with filter {pattern}")
 
     def cmd_ask(self, args):
         "Ask a question to the knowledge base"
