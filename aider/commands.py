@@ -388,6 +388,15 @@ class Commands:
         )
         self.io.tool_output(f"Knowledge base created from {sitemap_url}")
 
+    def cmd_ask(self, args):
+        "Ask a question to the knowledge base"
+        if self.knowledge_base is None:
+            self.io.tool_error("No knowledge base available. Use /request to create one.")
+            return
+        question = args.strip()
+        answer = self.knowledge_base.ask(question)
+        self.io.tool_output(f"Answer: {answer}")
+
     def cmd_exit(self, args):
         "Exit the application"
         sys.exit()
