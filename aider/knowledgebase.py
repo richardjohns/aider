@@ -73,6 +73,10 @@ class KnowledgeBase:
             chunk_size=chunk_size, chunk_overlap=chunk_overlap
         )
         docs = doc_splitter.split_documents(data)
+
+        # Print the value of docs for debugging
+        print(f"docs: {docs}")
+        
         logger.info("{n} chunks created", n=len(docs))
 
         logger.info("Building the vector database ...")
