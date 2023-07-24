@@ -449,6 +449,8 @@ class Commands:
             cmd_method = getattr(self, cmd_method_name, None)
             if cmd_method:
                 description = cmd_method.__doc__
+                if cmd == '/research':
+                    description += " Example: /research https://nextjs.org/sitemap.xml f=docs/getting-started"
                 self.io.tool_output(f"{cmd} {description}")
             else:
                 self.io.tool_output(f"{cmd} No description available.")
