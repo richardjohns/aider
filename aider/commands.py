@@ -376,8 +376,8 @@ class Commands:
             )
             return msg
 
-    def cmd_request(self, args):
-        "Request a sitemap URL and create a local Chroma vector database"
+    def cmd_research(self, args):
+        "Research a sitemap URL and create a local Chroma vector database"
         from aider.knowledgebase import KnowledgeBase
         sitemap_url = args.strip()
         self.knowledge_base = KnowledgeBase(
