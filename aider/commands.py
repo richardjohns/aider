@@ -380,14 +380,11 @@ class Commands:
         "Research a sitemap URL and create a local Chroma vector database"
         from aider.knowledgebase import KnowledgeBase
         
-        # Print the value of args for debugging
-        print(f"args: {args}")
+        # Strip any leading or trailing whitespace from the args string
+        args = args.strip()
         
         args = args.split(' ')
         sitemap_url = args[0].strip()
-        
-        # Print the value of sitemap_url for debugging
-        print(f"sitemap_url: {sitemap_url}")
         
         pattern = "docs/getting-started/"
         if len(args) > 1 and args[1].startswith('f='):
@@ -399,7 +396,6 @@ class Commands:
             chunk_overlap=3000,
         )
         self.io.tool_output(f"Knowledge base created from {sitemap_url} with filter {pattern}")
-
 
     def cmd_ask(self, args):
         "Ask a question to the knowledge base"
