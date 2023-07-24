@@ -13,9 +13,15 @@ import xml.etree.ElementTree as ET
 from dotenv import load_dotenv
 from loguru import logger
 
-load_dotenv("../.env")
-openai_api_key = os.getenv("OPENAI_API_KEY")
-print(openai_api_key)  # To check if the value is correctly loaded
+#load_dotenv("../.env")
+#openai_api_key = os.getenv("OPENAI_API_KEY")
+#print(openai_api_key)  # To check if the value is correctly loaded
+
+# Define your OpenAI API key here
+OPENAI_API_KEY = "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"
+
+# Pass the OPENAI_API_KEY value to the OpenAIEmbeddings() function
+embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
 
 
 def extract_urls_from_sitemap(sitemap):
