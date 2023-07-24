@@ -76,11 +76,11 @@ class KnowledgeBase:
 
         # Print the value of docs for debugging
         print(f"docs: {docs}")
-        
+
         logger.info("{n} chunks created", n=len(docs))
 
         logger.info("Building the vector database ...")
-        persist_directory = '../db'
+        persist_directory = 'db'
         embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
         vectordb = Chroma.from_documents(docs, embeddings, persist_directory)
         # for non-persistent local development instead use
