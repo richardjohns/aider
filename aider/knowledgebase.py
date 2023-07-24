@@ -76,13 +76,31 @@ class KnowledgeBase:
 
         # Print the value of docs for debugging
         print(f"docs: {docs}")
-
+        
         logger.info("{n} chunks created", n=len(docs))
 
         logger.info("Building the vector database ...")
-        persist_directory = 'db'
+        persist_directory = '../db'
         embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
-        vectordb = Chroma.from_documents(docs, embeddings, persist_directory)
+
+        # Add print statements to Chroma.from_documents() method for debugging
+        class DebugChroma(Chroma):
+            @classmethod
+            def from_documents(cls, documents, embeddings, persist_directory=None):
+                texts = [doc["text"] for doc in documents]
+                metadatas = [doc.get("metadata", {}) for doc in documents]
+                ids = [doc.get("id") for doc in documents]
+                
+                # Print the values of texts, metadatas, and ids for debugging
+                print(f"texts: {texts}")
+                print(f"metadatas: {metadatas}")
+                print(f"ids: {ids}")
+                
+                return cls.from_texts(texts, embeddings, metadatas=metadatas, ids=ids, persist_directory=persist_directory)
+        
+        vectordb = DebugChroma.from_documents(docs, embeddings, persist_directory)
+
+        # vectordb = Chroma.from_documents(docs, embeddings, persist_directory)
         # for non-persistent local development instead use
         # vectordb = Chroma.from_documents(docs, embeddings)
 
