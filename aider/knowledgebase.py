@@ -7,7 +7,6 @@ from langchain.document_loaders import UnstructuredURLLoader
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQAWithSourcesChain
 
-from dotenv import load_dotenv, dotenv_values
 import os
 import requests
 import xml.etree.ElementTree as ET
@@ -75,7 +74,7 @@ class KnowledgeBase:
         logger.info("{n} chunks created", n=len(docs))
 
         logger.info("Building the vector database ...")
-        embeddings = OpenAIEmbeddings()
+        embeddings = OpenAIEmbeddings(api_key=openai_api_key)
         docsearch = Chroma.from_documents(docs, embeddings)
 
         logger.info("Building the retrieval chain ...")
@@ -100,5 +99,3 @@ if __name__ == "__main__":
         chunk_overlap=3000,
     )
 
-    # Ask a question
-    # res = kb.ask("How do I deploy my Next.js app?")/h
