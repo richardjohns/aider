@@ -7,17 +7,17 @@ from langchain.document_loaders import UnstructuredURLLoader
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQAWithSourcesChain
 
+from dotenv import load_dotenv
 import os
 import requests
 import xml.etree.ElementTree as ET
-from dotenv import load_dotenv
 from loguru import logger
 
-# Define your OpenAI API key here
-OPENAI_API_KEY = "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"
+load_dotenv(dotenv_path="../.env")
 
-# Pass the OPENAI_API_KEY value to the OpenAIEmbeddings() function using the correct parameter name `openai_api_key`
-embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
+openai_api_key=os.environ['OPENAI_API_KEY']
+print(f"openai_api_key: {openai_api_key}")
+embeddings = OpenAIEmbeddings(openai_api_key)
 
 
 def extract_urls_from_sitemap(sitemap):
@@ -81,15 +81,15 @@ class KnowledgeBase:
 
         logger.info("Building the vector database ...")
         persist_directory = '../db'
-        embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
+        embeddings = OpenAIEmbeddings(openai_api_key)
 
-        vectordb = Chroma.from_documents(docs, embeddings, persist_directory=persist_directory)
+        vectordb = Chroma.from_documents(docs, embeddings, persist_directory)
         # for non-persistent local development instead use
         # vectordb = Chroma.from_documents(docs, embeddings)
 
         logger.info("Building the retrieval chain ...")
         self.chain = RetrievalQAWithSourcesChain.from_chain_type(
-            ChatOpenAI(openai_api_key=OPENAI_API_KEY),
+            ChatOpenAI(openai_api_key),
             chain_type="map_reduce",
             retriever=vectordb.as_retriever(),
         )
