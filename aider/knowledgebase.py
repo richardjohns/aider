@@ -81,7 +81,7 @@ class KnowledgeBase:
 
         logger.info("Building the retrieval chain ...")
         self.chain = RetrievalQAWithSourcesChain.from_chain_type(
-            ChatOpenAI(),
+            ChatOpenAI(openai_api_key=OPENAI_API_KEY),
             chain_type="map_reduce",
             retriever=docsearch.as_retriever(),
         )
