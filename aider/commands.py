@@ -18,6 +18,7 @@ class Commands:
         self.io = io
         self.coder = coder
         self.tokenizer = tiktoken.encoding_for_model(coder.main_model.name)
+        self.knowledge_base = None
 
     def is_command(self, inp):
         if inp[0] == "/":
@@ -374,6 +375,18 @@ class Commands:
                 output=combined_output,
             )
             return msg
+
+    def cmd_request(self, args):
+        "Request a sitemap URL and create a local Chroma vector database"
+        from aider.knowledgebase import KnowledgeBase
+        sitemap_url = args.strip()
+        self.knowledge_base = KnowledgeBase(
+            sitemap_url=sitemap_url,
+            pattern="docs/api-refe",
+            chunk_size=8000,
+            chunk_overlap=3000,
+        )
+        self.io.tool_output(f"Knowledge base created from {sitemap_url}")
 
     def cmd_exit(self, args):
         "Exit the application"
