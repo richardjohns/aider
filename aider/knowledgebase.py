@@ -13,16 +13,9 @@ import requests
 import xml.etree.ElementTree as ET
 from loguru import logger
 
-load_dotenv(dotenv_path="../.env", verbose=True)
+load_dotenv()
 
-# Print the absolute path of the script file
-print(f"Script file: {os.path.abspath(__file__)}")
-
-# Print the absolute path of the .env file
-dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.env")
-print(f".env file: {dotenv_path}")
-
-openai_api_key = os.getenv('OPENAI_API_KEY')
+openai_api_key = os.getenv("OPENAI_API_KEY")
 embeddings = OpenAIEmbeddings(openai_api_key)
 
 
