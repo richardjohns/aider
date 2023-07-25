@@ -76,10 +76,11 @@ class KnowledgeBase:
         logger.info("Building the vector database ...")
         persist_directory = './db'
         collection_name = 'NextJS'
+        client_settings = {"use_new_architecture": True}
         embeddings = OpenAIEmbeddings()
         ids = list(range(len(docs)))
 
-        vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory)
+        vectordb = Chroma.from_documents(docs, embeddings, client_settings, ids, collection_name, persist_directory)
         # for non-persistent local development instead use
         # vectordb = Chroma.from_documents(docs, embeddings)
 
