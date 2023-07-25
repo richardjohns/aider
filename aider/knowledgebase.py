@@ -22,8 +22,7 @@ print(f"Script file: {os.path.abspath(__file__)}")
 dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../.env")
 print(f".env file: {dotenv_path}")
 
-openai_api_key = os.environ['OPENAI_API_KEY']
-print(f"openai_api_key: {openai_api_key}")
+openai_api_key = os.getenv('OPENAI_API_KEY')
 embeddings = OpenAIEmbeddings(openai_api_key)
 
 
