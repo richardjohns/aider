@@ -414,6 +414,10 @@ class Commands:
         
         self.io.tool_output(output)
 
+        # Ask the user if they want to save the answer to the chat history
+        if self.io.confirm_ask("Do you want to save the answer to the chat history?", default="y"):
+            self.coder.cur_messages.append(output)
+
     def cmd_exit(self, args):
         "Exit the application"
         sys.exit()
