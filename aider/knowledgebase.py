@@ -74,7 +74,7 @@ class KnowledgeBase:
         logger.info("{n} chunks created", n=len(docs))
 
         logger.info("Building the vector database ...")
-        persist_directory = '../db'
+        persist_directory = './db'
         embeddings = OpenAIEmbeddings()
 
         vectordb = Chroma.from_documents(docs, embeddings, persist_directory)
