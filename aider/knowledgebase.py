@@ -1,5 +1,6 @@
 from typing import Optional
 import chromadb
+import os
 
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
@@ -80,9 +81,12 @@ class KnowledgeBase:
         embeddings = OpenAIEmbeddings()
         ids = [str(i) for i in range(len(docs))]
 
-        vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory)
-        # for non-persistent local development instead use
-        # vectordb = Chroma.from_documents(docs, embeddings)
+        if os.path.exists(persist_directory):
+            logger.info("Loading existing vector database ...")
+            vectordb = Chroma.load(persist_directory, collection_name)
+        else:
+            logger.info("Creating new vector database ...")
+            vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory)
 
         logger.info("Building the retrieval chain ...")
         self.chain = RetrievalQAWithSourcesChain.from_chain_type(
