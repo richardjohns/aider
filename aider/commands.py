@@ -399,6 +399,8 @@ class Commands:
 
     def cmd_ask(self, args):
         "Ask a question to the knowledge base"
+        from aider.knowledgebase import KnowledgeBase
+        
         if self.knowledge_base is None:
             # Check if a Chroma database exists in the persistent directory
             persist_dir = Path('./db')
