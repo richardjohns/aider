@@ -97,6 +97,13 @@ class KnowledgeBase:
 
         logger.info("Knowledge base created!")
 
+    def get_db_stats(self):
+        "Get the database statistics"
+        # Assume that the Chroma class has a get_stats method
+        stats = self.vectordb.get_stats()
+        # Convert the stats dictionary to a string and return it
+        return str(stats)
+
     def ask(self, query: str):
         return self.chain({"question": query}, return_only_outputs=True)
 
