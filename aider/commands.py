@@ -399,9 +399,6 @@ class Commands:
 
     def cmd_ask(self, args):
         "Ask a question to the knowledge base"
-        from aider.knowledgebase import KnowledgeBase
-        persist_directory = 'db'
-        
         if self.knowledge_base is None:
             self.io.tool_error("No knowledge base available. Use /research to create one.")
             return
