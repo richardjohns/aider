@@ -424,8 +424,9 @@ class Commands:
         self.io.tool_output("Asking knowledge base the question: %s" % question)
         try:
             answer = self.knowledge_base.ask(question)
-        except IndexError:
-            self.io.tool_error("An error occurred while processing the question.")
+        except Exception as e:
+            logging.exception(e)
+            self.io.tool_error("An error occurred while processing the question. Check the logs for more details.")
             return
         self.io.tool_output("Received answer from knowledge base: %s" % answer)
         
