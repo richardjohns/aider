@@ -401,8 +401,8 @@ class Commands:
         "Ask a question to the knowledge base"
         if self.knowledge_base is None:
             # Check if a Chroma database exists in the persistent directory
-            persist_dir = Path('path/to/persist_directory')
-            chroma_db_file = persist_dir / 'chroma.db'
+            persist_dir = Path('./db')
+            chroma_db_file = persist_dir / 'chroma.sqlite3'
             if chroma_db_file.exists():
                 # Load the existing Chroma database
                 self.knowledge_base = KnowledgeBase.load(chroma_db_file)
