@@ -100,6 +100,32 @@ class KnowledgeBase:
     def ask(self, query: str):
         return self.chain({"question": query}, return_only_outputs=True)
 
+    @classmethod
+    def load(cls, chroma_db_file: str):
+        """
+        Load a KnowledgeBase instance from a saved Chroma database file.
+
+        Args:
+            chroma_db_file (str): The path to the saved Chroma database file.
+
+        Returns:
+            A KnowledgeBase instance.
+        """
+        # Load the Chroma database
+        vectordb = Chroma.load(chroma_db_file)
+
+        # Create a new KnowledgeBase instance
+        kb = cls.__new__(cls)
+
+        # Set the retrieval chain
+        kb.chain = RetrievalQAWithSourcesChain.from_chain_type(
+            ChatOpenAI(),
+            chain_type="map_reduce",
+            retriever=vectordb.as_retriever(),
+        )
+
+        return kb
+
 
 if __name__ == "__main__":
     # Build the knowledge base
