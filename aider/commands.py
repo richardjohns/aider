@@ -400,8 +400,15 @@ class Commands:
     def cmd_ask(self, args):
         "Ask a question to the knowledge base"
         if self.knowledge_base is None:
-            self.io.tool_error("No knowledge base available. Use /research to create one.")
-            return
+            # Check if a Chroma database exists in the persistent directory
+            persist_dir = Path('path/to/persist_directory')
+            chroma_db_file = persist_dir / 'chroma.db'
+            if chroma_db_file.exists():
+                # Load the existing Chroma database
+                self.knowledge_base = KnowledgeBase.load(chroma_db_file)
+            else:
+                self.io.tool_error("No knowledge base available. Use /research to create one.")
+                return
         
         question = args.strip()
         answer = self.knowledge_base.ask(question)
