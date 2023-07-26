@@ -402,7 +402,7 @@ class Commands:
         "Ask a question to the knowledge base"
         from aider.knowledgebase import KnowledgeBase
 
-        self.io.tool_output("cmd_ask called with args: %s" % args, log_only=True)
+        self.io.tool_output("cmd_ask called with args: %s" % args)
         
         if self.knowledge_base is None:
             # Check if a Chroma database exists in the persistent directory
@@ -416,17 +416,18 @@ class Commands:
                 return
         
         question = args.strip()
+        
         if not question:
             self.io.tool_error("No question provided.")
             return
 
-        self.io.tool_output("Asking knowledge base the question: %s" % question, log_only=True)
+        self.io.tool_output("Asking knowledge base the question: %s" % question)
         try:
             answer = self.knowledge_base.ask(question)
         except IndexError:
             self.io.tool_error("An error occurred while processing the question.")
             return
-        self.io.tool_output("Received answer from knowledge base: %s" % answer, log_only=True)
+        self.io.tool_output("Received answer from knowledge base: %s" % answer)
         
         # Extract the answer text and sources from the answer dictionary
         answer_text = answer['answer']
@@ -441,7 +442,7 @@ class Commands:
         if self.io.confirm_ask("Do you want to save the answer to the chat history?", default="y"):
             self.coder.cur_messages.append(output)
         
-        self.io.tool_output("cmd_ask completed", log_only=True)
+        self.io.tool_output("cmd_ask completed")
 
     def cmd_exit(self, args):
         "Exit the application"
