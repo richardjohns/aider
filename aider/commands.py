@@ -399,9 +399,21 @@ class Commands:
 
     def cmd_ask(self, args):
         "Ask a question to the knowledge base"
+        from aider.knowledgebase import KnowledgeBase
+        persist_directory = 'db'
+
+        self.knowledge_base = KnowledgeBase(
+            sitemap_url="https://nextjs.org/sitemap.xml",
+            pattern="docs/getting-started/",
+            chunk_size=8000,
+            chunk_overlap=3000,
+            persist_directory=persist_directory
+        )
+
         if self.knowledge_base is None:
             self.io.tool_error("No knowledge base available. Use /research to create one.")
             return
+        
         question = args.strip()
         answer = self.knowledge_base.ask(question)
         

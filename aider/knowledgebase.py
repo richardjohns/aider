@@ -77,7 +77,6 @@ class KnowledgeBase:
         logger.info("Building the vector database ...")
         persist_directory = 'db'
         collection_name = 'NextJS'
-        client_settings = {"use_new_architecture": True}
         embeddings = OpenAIEmbeddings()
         ids = [str(i) for i in range(len(docs))]
 
