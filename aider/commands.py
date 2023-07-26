@@ -406,8 +406,7 @@ class Commands:
             sitemap_url="https://nextjs.org/sitemap.xml",
             pattern="docs/getting-started/",
             chunk_size=8000,
-            chunk_overlap=3000,
-            persist_directory=persist_directory
+            chunk_overlap=3000
         )
 
         if self.knowledge_base is None:
