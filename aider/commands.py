@@ -398,13 +398,11 @@ class Commands:
         )
         self.io.tool_output(f"Knowledge base created from {sitemap_url} with filter {pattern}")
 
-    import logging
-
     def cmd_ask(self, args):
         "Ask a question to the knowledge base"
         from aider.knowledgebase import KnowledgeBase
 
-        logging.debug("cmd_ask called with args: %s", args)
+        self.io.tool_output("cmd_ask called with args: %s" % args, log_only=True)
         
         if self.knowledge_base is None:
             # Check if a Chroma database exists in the persistent directory
@@ -422,13 +420,13 @@ class Commands:
             self.io.tool_error("No question provided.")
             return
 
-        logging.debug("Asking knowledge base the question: %s", question)
+        self.io.tool_output("Asking knowledge base the question: %s" % question, log_only=True)
         try:
             answer = self.knowledge_base.ask(question)
         except IndexError:
             self.io.tool_error("An error occurred while processing the question.")
             return
-        logging.debug("Received answer from knowledge base: %s", answer)
+        self.io.tool_output("Received answer from knowledge base: %s" % answer, log_only=True)
         
         # Extract the answer text and sources from the answer dictionary
         answer_text = answer['answer']
@@ -443,7 +441,7 @@ class Commands:
         if self.io.confirm_ask("Do you want to save the answer to the chat history?", default="y"):
             self.coder.cur_messages.append(output)
         
-        logging.debug("cmd_ask completed")
+        self.io.tool_output("cmd_ask completed", log_only=True)
 
     def cmd_exit(self, args):
         "Exit the application"
