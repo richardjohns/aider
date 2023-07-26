@@ -74,7 +74,7 @@ class KnowledgeBase:
         logger.info("{n} chunks created", n=len(docs))
 
         logger.info("Building the vector database ...")
-        persist_directory = './db'
+        persist_directory = 'db'
         collection_name = 'NextJS'
         client_settings = {"use_new_architecture": True}
         embeddings = OpenAIEmbeddings()
