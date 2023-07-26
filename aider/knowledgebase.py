@@ -79,7 +79,7 @@ class KnowledgeBase:
         collection_name = 'NextJS'
         client_settings = {"use_new_architecture": True}
         embeddings = OpenAIEmbeddings()
-        ids = list(range(len(docs)))
+        ids = [str(i) for i in range(len(docs))]
 
         vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory)
         # for non-persistent local development instead use
