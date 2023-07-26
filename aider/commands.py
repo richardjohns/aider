@@ -413,6 +413,10 @@ class Commands:
                 return
         
         question = args.strip()
+        if not question:
+            self.io.tool_error("No question provided.")
+            return
+
         answer = self.knowledge_base.ask(question)
         
         # Extract the answer text and sources from the answer dictionary
