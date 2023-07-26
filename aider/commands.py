@@ -3,6 +3,7 @@ import shlex
 import subprocess
 import sys
 from pathlib import Path
+import logging
 
 import git
 import tiktoken
