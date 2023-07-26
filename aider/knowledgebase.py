@@ -114,8 +114,11 @@ class KnowledgeBase:
         # Create an instance of the OpenAIEmbeddings class
         embeddings = OpenAIEmbeddings()
 
+        # Extract the directory from the chroma_db_file path
+        chroma_db_dir = os.path.dirname(chroma_db_file)
+
         # Create an instance of the Chroma class
-        vectordb = Chroma(persist_directory=str(chroma_db_file), embedding_function=embeddings)
+        vectordb = Chroma(persist_directory=chroma_db_dir, embedding_function=embeddings)
 
         # Create a new KnowledgeBase instance
         kb = cls.__new__(cls)
