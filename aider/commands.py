@@ -417,7 +417,11 @@ class Commands:
             self.io.tool_error("No question provided.")
             return
 
-        answer = self.knowledge_base.ask(question)
+        try:
+            answer = self.knowledge_base.ask(question)
+        except IndexError:
+            self.io.tool_error("An error occurred while processing the question.")
+            return
         
         # Extract the answer text and sources from the answer dictionary
         answer_text = answer['answer']
