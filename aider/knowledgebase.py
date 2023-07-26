@@ -111,8 +111,11 @@ class KnowledgeBase:
         Returns:
             A KnowledgeBase instance.
         """
-        # Load the Chroma database
-        vectordb = Chroma.load(chroma_db_file)
+        # Create an instance of the OpenAIEmbeddings class
+        embeddings = OpenAIEmbeddings()
+
+        # Create an instance of the Chroma class
+        vectordb = Chroma(persist_directory=chroma_db_file, embedding_function=embeddings)
 
         # Create a new KnowledgeBase instance
         kb = cls.__new__(cls)
