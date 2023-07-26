@@ -80,7 +80,7 @@ class KnowledgeBase:
         embeddings = OpenAIEmbeddings()
         ids = list(range(len(docs)))
 
-        vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory, client_settings)
+        vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory)
         # for non-persistent local development instead use
         # vectordb = Chroma.from_documents(docs, embeddings)
 
