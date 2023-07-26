@@ -398,22 +398,14 @@ class Commands:
         )
         self.io.tool_output(f"Knowledge base created from {sitemap_url} with filter {pattern}")
 
-    def cmd_ask(self, args):
-        "Ask a question to the knowledge base"
-        from aider.knowledgebase import KnowledgeBase
-
-        self.io.tool_output("cmd_ask called with args: %s" % args)
-        
+    def cmd_kbcheck(self, args):
+        "Check and list details of the persistent chroma db"
         if self.knowledge_base is None:
-            # Check if a Chroma database exists in the persistent directory
-            persist_dir = Path('./db')
-            chroma_db_file = persist_dir / 'chroma.sqlite3'
-            if chroma_db_file.exists():
-                # Load the existing Chroma database
-                self.knowledge_base = KnowledgeBase.load(chroma_db_file)
-            else:
-                self.io.tool_error("No knowledge base available. Use /research to create one.")
-                return
+            self.io.tool_error("No knowledge base available. Use /research to create one.")
+            return
+
+        db_stats = self.knowledge_base.get_db_stats()
+        self.io.tool_output(db_stats)
         
         question = args.strip()
         
