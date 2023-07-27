@@ -83,10 +83,10 @@ class KnowledgeBase:
 
         if os.path.exists(persist_directory):
             logger.info("Loading existing vector database ...")
-            vectordb = Chroma.load(persist_directory, collection_name)
+            self.vectordb = Chroma.load(persist_directory, collection_name)
         else:
             logger.info("Creating new vector database ...")
-            vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory)
+            self.vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory)
 
         logger.info("Building the retrieval chain ...")
         self.chain = RetrievalQAWithSourcesChain.from_chain_type(
@@ -100,9 +100,8 @@ class KnowledgeBase:
     def get_db_stats(self):
         "Get the database statistics"
         # Check if the Chroma class has a get_stats method
-        vectordb = self.get_vectordb()
-        if hasattr(vectordb, 'get_stats'):
-            stats = vectordb.get_stats()
+        if hasattr(self.vectordb, 'get_stats'):
+            stats = self.vectordb.get_stats()
             # Convert the stats dictionary to a string and return it
             return str(stats)
         else:
