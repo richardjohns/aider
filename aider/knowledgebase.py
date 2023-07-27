@@ -134,6 +134,9 @@ class KnowledgeBase:
         # Create a new KnowledgeBase instance
         kb = cls.__new__(cls)
 
+        # Set the vectordb attribute
+        kb.vectordb = vectordb
+
         # Set the retrieval chain
         kb.chain = RetrievalQAWithSourcesChain.from_chain_type(
             ChatOpenAI(),
