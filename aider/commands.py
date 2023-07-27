@@ -484,6 +484,11 @@ class Commands:
         for file in other_files:
             self.io.tool_output(f"  {file}")
 
+    def cmd_kbstats(self, args):
+        "Get the database statistics"
+        stats = self.get_db_stats()
+        self.io.tool_output(stats)
+
     def cmd_help(self, args):
         "Show help about all commands"
         commands = sorted(self.get_commands())
