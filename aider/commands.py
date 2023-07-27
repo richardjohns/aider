@@ -16,9 +16,9 @@ from .dump import dump  # noqa: F401
 
 class Commands:
     from pathlib import Path
-    from aider.knowledgebase import KnowledgeBase
 
     def __init__(self, io, coder):
+        from aider.knowledgebase import KnowledgeBase
         self.io = io
         self.coder = coder
         self.tokenizer = tiktoken.encoding_for_model(coder.main_model.name)
