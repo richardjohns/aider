@@ -398,6 +398,13 @@ class Commands:
         )
         self.io.tool_output(f"Knowledge base created from {sitemap_url} with filter {pattern}")
 
+    def get_db_stats(self):
+        "Get the database statistics"
+        # Assume that the Chroma class has a get_stats method
+        stats = self.vectordb.get_stats()
+        # Convert the stats dictionary to a string and return it
+        return str(stats)
+
     def cmd_ask(self, args):
         "Ask a question to the knowledge base"
         from aider.knowledgebase import KnowledgeBase
