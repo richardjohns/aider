@@ -15,11 +15,22 @@ from .dump import dump  # noqa: F401
 
 
 class Commands:
+    from pathlib import Path
+    from aider.knowledgebase import KnowledgeBase
+
     def __init__(self, io, coder):
         self.io = io
         self.coder = coder
         self.tokenizer = tiktoken.encoding_for_model(coder.main_model.name)
-        self.knowledge_base = None
+        
+        # Check if a Chroma database exists in the persistent directory
+        persist_dir = Path('./db')
+        chroma_db_file = persist_dir / 'chroma.sqlite3'
+        if chroma_db_file.exists():
+            # Load the existing Chroma database
+            self.knowledge_base = KnowledgeBase.load(chroma_db_file)
+        else:
+            self.knowledge_base = None
 
     def is_command(self, inp):
         if inp[0] == "/":
