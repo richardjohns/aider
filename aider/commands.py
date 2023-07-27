@@ -501,7 +501,9 @@ class Commands:
             self.io.tool_error("No knowledge base available. Use /research to create one.")
             return
         stats = self.knowledge_base.get_db_stats()
-        self.io.tool_output(stats)
+        peek = self.knowledge_base.peek()
+        count = self.knowledge_base.count()
+        self.io.tool_output(f"Stats: {stats}\nFirst 10 items: {peek}\nTotal items: {count}")
 
     def cmd_help(self, args):
         "Show help about all commands"
