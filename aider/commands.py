@@ -486,7 +486,10 @@ class Commands:
 
     def cmd_kbstats(self, args):
         "Get the database statistics"
-        stats = self.get_db_stats()
+        if self.knowledge_base is None:
+            self.io.tool_error("No knowledge base available. Use /research to create one.")
+            return
+        stats = self.knowledge_base.get_db_stats()
         self.io.tool_output(stats)
 
     def cmd_help(self, args):

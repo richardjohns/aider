@@ -100,9 +100,13 @@ class KnowledgeBase:
     def get_db_stats(self):
         "Get the database statistics"
         # Assume that the Chroma class has a get_stats method
-        stats = self.vectordb.get_stats()
+        stats = self.get_vectordb().get_stats()
         # Convert the stats dictionary to a string and return it
         return str(stats)
+
+    def get_vectordb(self):
+        "Get the vectordb"
+        return self.vectordb
 
     def ask(self, query: str):
         return self.chain({"question": query}, return_only_outputs=True)
