@@ -99,10 +99,14 @@ class KnowledgeBase:
 
     def get_db_stats(self):
         "Get the database statistics"
-        # Assume that the Chroma class has a get_stats method
-        stats = self.get_vectordb().get_stats()
-        # Convert the stats dictionary to a string and return it
-        return str(stats)
+        # Check if the Chroma class has a get_stats method
+        vectordb = self.get_vectordb()
+        if hasattr(vectordb, 'get_stats'):
+            stats = vectordb.get_stats()
+            # Convert the stats dictionary to a string and return it
+            return str(stats)
+        else:
+            return "The Chroma class does not have a get_stats method."
 
     def get_vectordb(self):
         "Get the vectordb"
