@@ -111,6 +111,10 @@ class KnowledgeBase:
         "Get the vectordb"
         return self.vectordb
 
+    def peek(self):
+        "Get the first 10 items in the collection"
+        return self.vectordb.peek(10)
+
     def ask(self, query: str):
         return self.chain({"question": query}, return_only_outputs=True)
 
