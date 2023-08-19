@@ -433,10 +433,10 @@ class Commands:
                 self.io.tool_error("No knowledge base available. Use /research to create one.")
                 return
         
+    def cmd_ask(self, args):
         question = args.strip()
-        
         if not question:
-            self.io.tool_error("No question provided.")
+            self.io.tool_error("Error: The question is empty. Please provide a valid question.")
             return
 
         self.io.tool_output("Asking knowledge base the question: %s" % question)
