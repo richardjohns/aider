@@ -439,7 +439,11 @@ class Commands:
         self.io.tool_output("Asking knowledge base the question: %s" % question)
         try:
             answer = self.knowledge_base.ask(question)
-            if isinstance(answer, dict) and 'answer' in answer:
+            if isinstance(answer, str):
+                # If the answer is a string, print it directly
+                answer_text = answer
+                sources = "No sources available"
+            elif isinstance(answer, dict) and 'answer' in answer:
                 # Extract the answer text and sources from the answer dictionary
                 answer_text = answer['answer']
                 sources = answer['sources']
@@ -450,7 +454,7 @@ class Commands:
             logging.exception(e)
             self.io.tool_error("An error occurred while processing the question. Check the logs for more details.")
             return
-        self.io.tool_output("Received answer from knowledge base: %s" % answer)
+        self.io.tool_output("Received answer from knowledge base: %s" % answer_text)
         
         # Format the output
         output = f"Answer: {answer_text}\n\nSources:\n{sources}"
