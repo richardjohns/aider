@@ -124,6 +124,9 @@ class KnowledgeBase:
             response = self.chain({"question": query}, return_only_outputs=True)
             logger.info(f"Response generated for the question: {query}")
             return response
+        except IndexError:
+            logger.error(f"No relevant documents found for the question: {query}")
+            return "No relevant documents found for your question. Please try another question."
         except Exception as e:
             logger.error(f"Error while generating response for the question: {query}. Error: {str(e)}")
             return f"Error: An error occurred while processing the question. Error: {str(e)}"
