@@ -392,6 +392,7 @@ class Commands:
         "Clear the knowledge base"
         import os
         import sqlite3
+        import logging
 
         # Path to the database file
         db_file = './db/chroma.sqlite3'
@@ -411,8 +412,10 @@ class Commands:
             conn.close()
 
             self.io.tool_output("Knowledge base cleared.")
+            logging.info("Knowledge base cleared.")
         else:
             self.io.tool_output("No knowledge base to clear.")
+            logging.info("No knowledge base to clear.")
 
     def cmd_research(self, args):
         "Research a sitemap URL and create a local Chroma vector database"
