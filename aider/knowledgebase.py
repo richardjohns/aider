@@ -116,9 +116,17 @@ class KnowledgeBase:
         return self.vectordb.peek(10)
 
     def ask(self, query: str):
+        logger.info(f"Received question: {query}")
         if not query.strip():
+            logger.error("Error: The query is empty.")
             return "Error: The query is empty. Please provide a valid question."
-        return self.chain({"question": query}, return_only_outputs=True)
+        try:
+            response = self.chain({"question": query}, return_only_outputs=True)
+            logger.info(f"Response generated for the question: {query}")
+            return response
+        except Exception as e:
+            logger.error(f"Error while generating response for the question: {query}. Error: {str(e)}")
+            return f"Error: An error occurred while processing the question. Error: {str(e)}"
 
     @classmethod
     def load(cls, chroma_db_file: str):
