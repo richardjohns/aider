@@ -93,7 +93,7 @@ class KnowledgeBase:
         self.chain = RetrievalQAWithSourcesChain.from_chain_type(
             ChatOpenAI(),
             chain_type="map_reduce",
-            retriever=vectordb.as_retriever(),
+            retriever=self.vectordb.as_retriever(),
         )
 
         logger.info("Knowledge base created!")
