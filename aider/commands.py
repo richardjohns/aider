@@ -388,6 +388,32 @@ class Commands:
             )
             return msg
 
+    def cmd_kbclear(self, args):
+        "Clear the knowledge base"
+        import os
+        import sqlite3
+
+        # Path to the database file
+        db_file = './db/chroma.sqlite3'
+
+        if os.path.exists(db_file):
+            # Connect to the SQLite database
+            conn = sqlite3.connect(db_file)
+
+            # Create a cursor object
+            cursor = conn.cursor()
+
+            # Execute the DROP TABLE statement
+            cursor.execute("DROP TABLE IF EXISTS chroma")
+
+            # Commit the changes and close the connection
+            conn.commit()
+            conn.close()
+
+            self.io.tool_output("Knowledge base cleared.")
+        else:
+            self.io.tool_output("No knowledge base to clear.")
+
     def cmd_research(self, args):
         "Research a sitemap URL and create a local Chroma vector database"
         from aider.knowledgebase import KnowledgeBase
