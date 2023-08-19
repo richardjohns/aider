@@ -29,8 +29,10 @@ class Commands:
         if chroma_db_file.exists():
             # Load the existing Chroma database
             self.knowledge_base = KnowledgeBase.load(chroma_db_file)
+            logging.info("Knowledge base loaded from existing database.")
         else:
             self.knowledge_base = None
+            logging.info("No existing knowledge base found.")
 
     def is_command(self, inp):
         if inp[0] == "/":
