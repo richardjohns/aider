@@ -422,7 +422,7 @@ class Commands:
 
         question = args.strip()
         if not question:
-            self.io.tool_error("Error: The question is empty. Please provide a valid question.")
+            self.io.tool_error("Error: The question is empty or only contains whitespace. Please provide a valid question.")
             return
 
         if self.knowledge_base is None:
