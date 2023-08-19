@@ -81,9 +81,10 @@ class KnowledgeBase:
         embeddings = OpenAIEmbeddings()
         ids = [str(i) for i in range(len(docs))]
 
+        embeddings = OpenAIEmbeddings()
         if os.path.exists(persist_directory):
             logger.info("Loading existing vector database ...")
-            self.vectordb = Chroma.load(persist_directory, collection_name)
+            self.vectordb = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
         else:
             logger.info("Creating new vector database ...")
             self.vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory)
