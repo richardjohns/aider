@@ -495,15 +495,15 @@ class Commands:
         for file in other_files:
             self.io.tool_output(f"  {file}")
 
+    import subprocess
+
     def cmd_kbstats(self, args):
-        "Get the database statistics"
-        if self.knowledge_base is None:
-            self.io.tool_error("No knowledge base available. Use /research to create one.")
-            return
-        stats = self.knowledge_base.get_db_stats()
-        peek = self.knowledge_base.peek()
-        count = self.knowledge_base.count()
-        self.io.tool_output(f"Stats: {stats}\nFirst 10 items: {peek}\nTotal items: {count}")
+        "Run the database test script"
+        try:
+            result = subprocess.run(["python", "aider/db_test.py"], capture_output=True, text=True)
+            self.io.tool_output(result.stdout)
+        except Exception as e:
+            self.io.tool_error(f"An error occurred while running the database test script: {e}")
 
     def cmd_help(self, args):
         "Show help about all commands"
