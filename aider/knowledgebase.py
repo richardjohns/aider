@@ -116,6 +116,8 @@ class KnowledgeBase:
         return self.vectordb.peek(10)
 
     def ask(self, query: str):
+        if not query.strip():
+            return "Error: The query is empty. Please provide a valid question."
         return self.chain({"question": query}, return_only_outputs=True)
 
     @classmethod
