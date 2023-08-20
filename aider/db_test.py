@@ -31,20 +31,20 @@ def main():
             print(data)
             break
 
-    # List all tables in the database and their row counts
+    # List all tables in the database and the first row for each table
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
     tables = cursor.fetchall()
     print('\nTables in the database:')
     for table in tables:
         table_name = table[0]
         try:
-            cursor.execute(f"SELECT * FROM {table_name};")
-            rows = cursor.fetchall()
-            row_count = len(rows)
-            print(f'- {table_name} (Row count: {row_count})')
-            for row in rows:
+            cursor.execute(f"SELECT * FROM {table_name} LIMIT 1;")
+            row = cursor.fetchone()
+            if row is not None:
                 row_dict = {desc[0]: value for desc, value in zip(cursor.description, row)}
-                print(f"data in row is {json.dumps(row_dict, indent=4)}")
+                print(f'- {table_name} (First row data: {json.dumps(row_dict, indent=4)})')
+            else:
+                print(f'- {table_name} (No data)')
         except Exception as e:
             print(f"Error reading table {table_name}: {e}")
 
