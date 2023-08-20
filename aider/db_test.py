@@ -24,12 +24,9 @@ def main():
         rows = cursor.fetchall()
         row_count = len(rows)
         print(f'- {table_name} (Row count: {row_count})')
-        if rows:
-            first_row = rows[0]
-            row_dict = {desc[0]: value for desc, value in zip(cursor.description, first_row)}
-            print(f"data in first row is {json.dumps(row_dict, indent=4)}")
-        else:
-            print("No rows in this table.")
+        for row in rows:
+            row_dict = {desc[0]: value for desc, value in zip(cursor.description, row)}
+            print(f"data in row is {json.dumps(row_dict, indent=4)}")
 
     # Close the connection to the database
     conn.close()
