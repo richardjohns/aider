@@ -44,7 +44,7 @@ def main():
             for row in rows:
                 row_dict = {desc[0]: value for desc, value in zip(cursor.description, row)}
                 print(f"data in row is {json.dumps(row_dict, indent=4)}")
-        except sqlite3.Error as e:
+        except Exception as e:
             print(f"Error reading table {table_name}: {e}")
 
     # Close the connection to the database
