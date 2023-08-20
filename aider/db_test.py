@@ -21,14 +21,17 @@ def main():
     for table in tables:
         print(f'- {table[0]}')
 
-    # Find a table with rows and list the data in a row
+    # Show the first row from each table
     for table in tables:
-        cursor.execute(f'SELECT * FROM {table[0]} LIMIT 1;')
-        data = cursor.fetchone()
-        if data is not None:
-            print(f'\nFirst row data from table "{table[0]}":')
-            print(data)
-            break
+        table_name = table[0]
+        cursor.execute(f"SELECT * FROM {table_name} LIMIT 1;")
+        row = cursor.fetchone()
+        if row is not None:
+            row_dict = {desc[0]: value for desc, value in zip(cursor.description, row)}
+            print(f"\nFirst row from {table_name}:")
+            print(json.dumps(row_dict, indent=4))
+        else:
+            print(f"No rows in {table_name}.")
 
     # Close the connection to the database
     conn.close()
