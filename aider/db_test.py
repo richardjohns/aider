@@ -14,20 +14,16 @@ def main():
     except sqlite3.Error as e:
         print(f'Database Status: NOT RESPONDING\nError: {e}')
 
-    # List all tables in the database
+    # List all tables in the database and their row counts
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
     tables = cursor.fetchall()
     print('\nTables in the database:')
-    for table in tables:
-        print(f'- {table[0]}')
-
-    # Test each table and print row count and first row data
     for table in tables:
         table_name = table[0]
         cursor.execute(f"SELECT * FROM {table_name};")
         rows = cursor.fetchall()
         row_count = len(rows)
-        print(f"\nTesting table {table_name}... row count is {row_count}...")
+        print(f'- {table_name} (Row count: {row_count})')
         if rows:
             first_row = rows[0]
             row_dict = {desc[0]: value for desc, value in zip(cursor.description, first_row)}
