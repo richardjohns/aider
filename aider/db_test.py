@@ -20,13 +20,16 @@ def main():
     print('\nTables in the database:')
     for table in tables:
         table_name = table[0]
-        cursor.execute(f"SELECT * FROM {table_name};")
-        rows = cursor.fetchall()
-        row_count = len(rows)
-        print(f'- {table_name} (Row count: {row_count})')
-        for row in rows:
-            row_dict = {desc[0]: value for desc, value in zip(cursor.description, row)}
-            print(f"data in row is {json.dumps(row_dict, indent=4)}")
+        try:
+            cursor.execute(f"SELECT * FROM {table_name};")
+            rows = cursor.fetchall()
+            row_count = len(rows)
+            print(f'- {table_name} (Row count: {row_count})')
+            for row in rows:
+                row_dict = {desc[0]: value for desc, value in zip(cursor.description, row)}
+                print(f"data in row is {json.dumps(row_dict, indent=4)}")
+        except sqlite3.Error as e:
+            print(f"Error reading table {table_name}: {e}")
 
     # Close the connection to the database
     conn.close()
