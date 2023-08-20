@@ -98,14 +98,6 @@ class KnowledgeBase:
 
         logger.info("Knowledge base created!")
 
-    def get_vectordb(self):
-        "Get the vectordb"
-        return self.vectordb
-
-    def peek(self):
-        "Get the first 10 items in the collection"
-        return self.vectordb.peek(10)
-
     def ask(self, query: str):
         logger.info(f"Received question: {query}")
         if not query.strip():
