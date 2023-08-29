@@ -77,7 +77,7 @@ class KnowledgeBase:
         logger.info("{n} chunks created", n=len(docs))
 
         logger.info("Building the vector database ...")
-        persist_directory = './db'
+        persist_directory = 'db'
         print(f'Persist directory: {persist_directory}')  # Print the persist directory
         collection_name = 'NextJS'
         embeddings = OpenAIEmbeddings()
