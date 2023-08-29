@@ -55,12 +55,41 @@ def main():
     for collection in collections:
         print(collection)
 
-    # Check the segments table
-    cursor.execute("SELECT * FROM segments;")
-    segments = cursor.fetchall()
-    print(f'Number of segments: {len(segments)}')
-    for segment in segments:
-        print(segment)
+    # Check the collection_metadata table
+    cursor.execute("SELECT COUNT(*) FROM collection_metadata;")
+    num_collection_metadata = cursor.fetchone()[0]
+    print(f'Number of collection metadata: {num_collection_metadata}')
+    if num_collection_metadata == 0:
+        print('Warning: The collection_metadata table is empty.')
+
+    # Check the segment_metadata table
+    cursor.execute("SELECT COUNT(*) FROM segment_metadata;")
+    num_segment_metadata = cursor.fetchone()[0]
+    print(f'Number of segment metadata: {num_segment_metadata}')
+    if num_segment_metadata == 0:
+        print('Warning: The segment_metadata table is empty.')
+
+    # Check the embeddings table
+    cursor.execute("SELECT COUNT(*) FROM embeddings;")
+    num_embeddings = cursor.fetchone()[0]
+    print(f'Number of embeddings: {num_embeddings}')
+    if num_embeddings == 0:
+        print('Warning: The embeddings table is empty.')
+
+    # Check the embedding_fulltext_data table
+    try:
+        cursor.execute("SELECT * FROM embedding_fulltext_data LIMIT 5;")
+        data = cursor.fetchall()
+        for row in data:
+            print(row)
+    except Exception as e:
+        print(f'Error reading the embedding_fulltext_data table: {e}')
+        # Check the segments table
+        cursor.execute("SELECT * FROM segments;")
+        segments = cursor.fetchall()
+        print(f'Number of segments: {len(segments)}')
+        for segment in segments:
+            print(segment)
 
     # Check the embeddings_queue table
     cursor.execute("SELECT COUNT(*) FROM embeddings_queue;")
