@@ -88,6 +88,7 @@ class KnowledgeBase:
         if os.path.exists(persist_directory):
             logger.info("Loading existing vector database ...")
             self.vectordb = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
+            print(f'Vector database: {self.vectordb}')  # Print the vector database
         else:
             logger.info("Creating new vector database ...")
             self.vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory)
