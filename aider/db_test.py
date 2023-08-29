@@ -48,6 +48,36 @@ def main():
         except Exception as e:
             print(f"Error reading table {table_name}: {e}")
 
+    # Check the collections table
+    cursor.execute("SELECT * FROM collections;")
+    collections = cursor.fetchall()
+    print(f'Number of collections: {len(collections)}')
+    for collection in collections:
+        print(collection)
+
+    # Check the segments table
+    cursor.execute("SELECT * FROM segments;")
+    segments = cursor.fetchall()
+    print(f'Number of segments: {len(segments)}')
+    for segment in segments:
+        print(segment)
+
+    # Check the embeddings_queue table
+    cursor.execute("SELECT COUNT(*) FROM embeddings_queue;")
+    num_embeddings = cursor.fetchone()[0]
+    print(f'Number of embeddings: {num_embeddings}')
+    if num_embeddings == 0:
+        print('Warning: The embeddings_queue table is empty.')
+
+    # Check the embedding_fulltext_data table
+    try:
+        cursor.execute("SELECT * FROM embedding_fulltext_data LIMIT 5;")
+        data = cursor.fetchall()
+        for row in data:
+            print(row)
+    except Exception as e:
+        print(f'Error reading the embedding_fulltext_data table: {e}')
+
     # Close the connection to the database
     conn.close()
 
