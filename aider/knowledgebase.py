@@ -77,13 +77,14 @@ class KnowledgeBase:
         logger.info("{n} chunks created", n=len(docs))
 
         logger.info("Building the vector database ...")
-        persist_directory = 'db'
+        persist_directory = './db'
+        print(f'Persist directory: {persist_directory}')  # Print the persist directory
         collection_name = 'NextJS'
         embeddings = OpenAIEmbeddings()
-        ids = [str(i) for i in range(len(docs))]
         print(f'Embedding function: {embeddings}')  # Print the embedding function
+        ids = [str(i) for i in range(len(docs))]
+        print(f'Document IDs: {ids}')  # Print the document IDs
 
-        embeddings = OpenAIEmbeddings()
         if os.path.exists(persist_directory):
             logger.info("Loading existing vector database ...")
             self.vectordb = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
