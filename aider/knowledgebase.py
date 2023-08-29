@@ -66,6 +66,7 @@ class KnowledgeBase:
         logger.info("Loading URLs content ...")
         loader = UnstructuredURLLoader(urls)
         data = loader.load()
+        print(f'First document: {data[0]}')  # Print the first document
 
         logger.info("Splitting documents in chunks ...")
         doc_splitter = CharacterTextSplitter(
@@ -80,6 +81,7 @@ class KnowledgeBase:
         collection_name = 'NextJS'
         embeddings = OpenAIEmbeddings()
         ids = [str(i) for i in range(len(docs))]
+        print(f'Embedding function: {embeddings}')  # Print the embedding function
 
         embeddings = OpenAIEmbeddings()
         if os.path.exists(persist_directory):
@@ -88,6 +90,7 @@ class KnowledgeBase:
         else:
             logger.info("Creating new vector database ...")
             self.vectordb = Chroma.from_documents(docs, embeddings, ids, collection_name, persist_directory)
+            print(f'Vector database: {self.vectordb}')  # Print the vector database
 
         logger.info("Building the retrieval chain ...")
         self.chain = RetrievalQAWithSourcesChain.from_chain_type(
