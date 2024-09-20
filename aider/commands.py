@@ -1,4 +1,5 @@
 import json
+import re
 import shlex
 import subprocess
 import sys
@@ -88,6 +89,19 @@ class Commands:
     # any method called cmd_xxx becomes a command automatically.
     # each one must take an args param.
 
+    def contains_secrets(self, content):
+        "Check if the content contains potential secrets using regex patterns"
+        secret_patterns = [
+            r'AKIA[0-9A-Z]{16}',  # AWS Access Key ID
+            r'(?i)secret',  # Generic secret keyword
+            r'(?i)password',  # Generic password keyword
+            r'(?i)api[_-]?key',  # Generic API key keyword
+        ]
+        for pattern in secret_patterns:
+            if re.search(pattern, content):
+                return True
+        return False
+
     def cmd_commit(self, args):
         "Commit edits to the repo made outside the chat (commit message optional)"
 
@@ -98,6 +112,13 @@ class Commands:
         if not self.coder.repo.is_dirty():
             self.io.tool_error("No more changes to commit.")
             return
+
+        # Check for secrets in the files to be committed
+        for fname in self.coder.abs_fnames:
+            content = self.io.read_text(fname)
+            if self.contains_secrets(content):
+                self.io.tool_error(f"Commit aborted: Potential secrets found in {fname}.")
+                return
 
         commit_message = args.strip()
         self.coder.commit(message=commit_message, which="repo_files")
